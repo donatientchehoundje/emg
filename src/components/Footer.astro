@@ -1,0 +1,119 @@
+---
+import { site } from "../data/site";
+import logo from "../assets/brand/logo.jpg";
+import { Image } from "astro:assets";
+import Icon from "./Icon.astro";
+
+const annee = new Date().getFullYear();
+
+const colFormations = [
+  { label: "Enseignement général", href: "/enseignement-general", icon: "book" },
+  { label: "Formation professionnelle", href: "/formation-professionnelle", icon: "tool" },
+  { label: "Filières", href: "/filieres", icon: "grid" },
+  { label: "Admissions", href: "/admissions", icon: "check" },
+];
+
+const colCentre = [
+  { label: "Accueil", href: "/", icon: "home" },
+  { label: "À propos", href: "/a-propos", icon: "info" },
+  { label: "Actualités", href: "/actualites", icon: "news" },
+  { label: "Galerie", href: "/galerie", icon: "image" },
+];
+
+const reseaux = [
+  { label: "Facebook", href: site.reseaux.facebook, icon: "facebook" },
+  { label: "TikTok", href: site.reseaux.tiktok, icon: "tiktok" },
+];
+---
+
+<footer class="relative bg-navy-950 text-cream-100">
+  <div class="h-1 w-full bg-gradient-to-r from-gold-600 via-gold-500 to-gold-600"></div>
+
+  <div class="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:grid-cols-2 sm:px-6 lg:grid-cols-5 lg:px-8">
+    <div class="sm:col-span-2 lg:col-span-2">
+      <a href="/" class="flex items-center gap-3">
+        <Image src={logo} alt="Logo CPU ÉMERGENCE PLUS" width={52} height={52} class="rounded-full ring-2 ring-gold-500/30" />
+        <span class="font-heading text-lg font-bold text-cream-50">CPU ÉMERGENCE PLUS</span>
+      </a>
+      <p class="mt-3 text-sm italic text-gold-500">{site.devise}</p>
+      <p class="mt-3 max-w-sm text-sm leading-relaxed text-cream-200/70">
+        Depuis {site.depuis}, pôle d'excellence de la formation générale et professionnelle au Bénin — l'école et
+        l'entreprise, main dans la main, pour la réussite de chaque apprenant.
+      </p>
+      <div class="mt-5 flex gap-3">
+        {reseaux.map((r) => (
+          <a
+            href={r.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={r.label}
+            class="flex h-10 w-10 items-center justify-center rounded-full bg-cream-50/10 text-cream-50 transition hover:bg-gold-500 hover:text-navy-950"
+          >
+            <Icon name={r.icon} class="h-[18px] w-[18px]" />
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <div>
+      <h3 class="font-heading text-sm font-semibold uppercase tracking-wide text-gold-500">Formations</h3>
+      <ul class="mt-4 space-y-3 text-sm text-cream-200/80">
+        {colFormations.map((item) => (
+          <li>
+            <a href={item.href} class="flex items-center gap-2.5 transition hover:text-cream-50">
+              <Icon name={item.icon} class="h-4 w-4 text-gold-500/80" />
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div>
+      <h3 class="font-heading text-sm font-semibold uppercase tracking-wide text-gold-500">Le centre</h3>
+      <ul class="mt-4 space-y-3 text-sm text-cream-200/80">
+        {colCentre.map((item) => (
+          <li>
+            <a href={item.href} class="flex items-center gap-2.5 transition hover:text-cream-50">
+              <Icon name={item.icon} class="h-4 w-4 text-gold-500/80" />
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div>
+      <h3 class="font-heading text-sm font-semibold uppercase tracking-wide text-gold-500">Contact</h3>
+      <ul class="mt-4 space-y-3 text-sm text-cream-200/80">
+        <li class="flex items-start gap-2.5">
+          <Icon name="pin" class="mt-0.5 h-4 w-4 shrink-0 text-gold-500/80" />
+          <span>{site.adresse}</span>
+        </li>
+        {site.telephones.map((tel) => (
+          <li class="flex items-center gap-2.5">
+            <Icon name="phone" class="h-4 w-4 shrink-0 text-gold-500/80" />
+            <a href={tel.href} class="transition hover:text-cream-50">{tel.numero}</a>
+          </li>
+        ))}
+        <li class="flex items-center gap-2.5">
+          <Icon name="mail" class="h-4 w-4 shrink-0 text-gold-500/80" />
+          <a href={`mailto:${site.email}`} class="transition hover:text-cream-50">{site.email}</a>
+        </li>
+      </ul>
+      <a
+        href="/contact"
+        class="mt-5 inline-flex items-center gap-2 rounded-full bg-gold-500 px-4 py-2 text-sm font-semibold text-navy-950 shadow transition hover:bg-gold-600"
+      >
+        Je m'inscris
+      </a>
+    </div>
+  </div>
+
+  <div class="border-t border-cream-100/10">
+    <div class="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-4 text-xs text-cream-200/60 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
+      <p>&copy; {annee} CPU ÉMERGENCE PLUS. Tous droits réservés.</p>
+      <a href="/mentions-legales" class="hover:text-cream-50">Mentions légales</a>
+    </div>
+  </div>
+</footer>

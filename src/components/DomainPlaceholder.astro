@@ -1,0 +1,76 @@
+---
+// Visuel de substitution pour les filières sans photo propre : à remplacer dès que
+// le client fournit une photo réelle de l'atelier/filière correspondant (champ CMS
+// `imagePrincipale`). Reste dans la charte graphique (bleu marine / crème / or).
+interface Props {
+  domaine: string;
+  class?: string;
+}
+
+const { domaine, class: className = "" } = Astro.props;
+
+const ICONS: Record<string, string> = {
+  "Mode & Artisanat": "scissors",
+  "Hôtellerie & Restauration": "toque",
+  "Beauté": "sparkle",
+  "Agriculture": "leaf",
+  "Bâtiment & BTP": "house",
+  "Communication & Numérique": "camera",
+  "Administration": "document",
+  "Santé": "cross",
+  "Génie électrique": "bolt",
+  "Génie thermique": "flame",
+  "Métallurgie & Mécanique": "wrench",
+};
+
+const icon = ICONS[domaine] ?? "wrench";
+---
+
+<div class:list={["relative flex h-full w-full items-center justify-center overflow-hidden bg-gradient-to-br from-navy-900 to-navy-700", className]}>
+  <svg class="absolute inset-0 h-full w-full opacity-10" xmlns="http://www.w3.org/2000/svg">
+    <pattern id={`grid-${icon}`} width="24" height="24" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.4" fill="#F6F1E1" />
+    </pattern>
+    <rect width="100%" height="100%" fill={`url(#grid-${icon})`} />
+  </svg>
+
+  <div class="relative z-10 flex flex-col items-center gap-3 px-4 text-center">
+    <span class="flex h-16 w-16 items-center justify-center rounded-full border-2 border-gold-500 text-gold-500">
+      {icon === "scissors" && (
+        <svg viewBox="0 0 24 24" class="h-8 w-8" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="6" cy="6" r="2.4" /><circle cx="6" cy="18" r="2.4" /><line x1="8" y1="7.5" x2="20" y2="18" /><line x1="8" y1="16.5" x2="20" y2="6" /></svg>
+      )}
+      {icon === "toque" && (
+        <svg viewBox="0 0 24 24" class="h-8 w-8" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 10a4 4 0 0 1 2-6 4 4 0 0 1 6 0 4 4 0 0 1 2 6" /><path d="M6 10h12v3H6z" /><path d="M7 13l1 7h8l1-7" /></svg>
+      )}
+      {icon === "sparkle" && (
+        <svg viewBox="0 0 24 24" class="h-8 w-8" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3v6M12 15v6M3 12h6M15 12h6M6 6l3 3M18 18l-3-3M6 18l3-3M18 6l-3 3" /></svg>
+      )}
+      {icon === "leaf" && (
+        <svg viewBox="0 0 24 24" class="h-8 w-8" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 20c8 0 12-6 12-14-8 0-14 4-14 12 0 1 .1 1.6.1 1.6" /><path d="M6 20c0-4 2-8 5-10" /></svg>
+      )}
+      {icon === "house" && (
+        <svg viewBox="0 0 24 24" class="h-8 w-8" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 11l8-6 8 6" /><path d="M6 10v9h12v-9" /><path d="M10 19v-5h4v5" /></svg>
+      )}
+      {icon === "camera" && (
+        <svg viewBox="0 0 24 24" class="h-8 w-8" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="7" width="18" height="13" rx="2" /><path d="M8 7l2-3h4l2 3" /><circle cx="12" cy="13.5" r="3.3" /></svg>
+      )}
+      {icon === "document" && (
+        <svg viewBox="0 0 24 24" class="h-8 w-8" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 3h7l4 4v14H7z" /><path d="M14 3v4h4" /><line x1="9.5" y1="12" x2="15" y2="12" /><line x1="9.5" y1="15.5" x2="15" y2="15.5" /></svg>
+      )}
+      {icon === "cross" && (
+        <svg viewBox="0 0 24 24" class="h-8 w-8" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 4v16M4 12h16" /></svg>
+      )}
+      {icon === "bolt" && (
+        <svg viewBox="0 0 24 24" class="h-8 w-8" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 3L5 14h6l-1 7 8-11h-6z" /></svg>
+      )}
+      {icon === "flame" && (
+        <svg viewBox="0 0 24 24" class="h-8 w-8" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 21c4 0 6-2.5 6-6 0-3-2-4.5-2.5-7-1 2-1.7 2.5-2.5 1.5C12 6 12.7 3 12.7 3 9 5 7 9 7 13c0 1 .2 2 .6 2.8-.4-.3-1-1-1.2-2C6 15 6 15.5 6 16c0 3 2 5 6 5z" /></svg>
+      )}
+      {icon === "wrench" && (
+        <svg viewBox="0 0 24 24" class="h-8 w-8" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14.7 6.3a4 4 0 0 0-5.4 5l-6 6 2.4 2.4 6-6a4 4 0 0 0 5-5.4l-2.3 2.3-2-2z" /></svg>
+      )}
+    </span>
+    <p class="font-heading text-sm font-semibold text-cream-50">{domaine}</p>
+    <p class="text-[11px] uppercase tracking-wide text-cream-200/60">#</p>
+  </div>
+</div>

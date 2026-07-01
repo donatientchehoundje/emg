@@ -1,0 +1,206 @@
+---
+import { site, navPrincipale } from "../data/site";
+import logo from "../assets/brand/logo.jpg";
+import { Image } from "astro:assets";
+import Icon from "./Icon.astro";
+
+const currentPath = Astro.url.pathname;
+const isActive = (href: string) => (href === "/" ? currentPath === "/" : currentPath.startsWith(href));
+const isGroupActive = (item: (typeof navPrincipale)[number]) =>
+  "children" in item ? item.children.some((c) => isActive(c.href)) : isActive(item.href);
+---
+
+<header class="sticky top-0 z-50 border-b border-navy-800/10 bg-cream-50/95 shadow-sm backdrop-blur">
+  <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-2 sm:px-6 lg:px-8">
+    <a href="/" class="flex shrink-0 items-center gap-3">
+      <Image src={logo} alt="Logo CPU ÉMERGENCE PLUS" width={52} height={52} class="rounded-full" />
+      <span class="hidden flex-col leading-tight sm:flex">
+        <span class="font-heading text-sm font-bold text-navy-900 sm:text-base">CPU ÉMERGENCE PLUS</span>
+        <span class="text-[11px] italic text-navy-600">{site.devise}</span>
+      </span>
+    </a>
+
+    <nav aria-label="Navigation principale" class="hidden lg:block">
+      <ul class="flex items-center gap-1 text-sm font-medium">
+        {navPrincipale.map((item) => (
+          <li class="relative">
+            {"children" in item ? (
+              <details class="nav-dropdown">
+                <summary
+                  class:list={[
+                    "flex cursor-pointer list-none items-center gap-1.5 rounded-full px-3 py-2 transition-colors hover:bg-navy-900 hover:text-cream-50 [&::-webkit-details-marker]:hidden",
+                    isGroupActive(item) ? "bg-navy-900 text-cream-50" : "text-navy-800",
+                  ]}
+                >
+                  <Icon name={item.icon} class="h-4 w-4" />
+                  {item.label}
+                  <Icon name="chevron-down" class="h-3.5 w-3.5 nav-chevron" />
+                </summary>
+                <div class="absolute left-0 top-full z-20 mt-2 w-72 rounded-2xl bg-white p-2 shadow-xl ring-1 ring-navy-900/10">
+                  {item.children.map((child) => (
+                    <a
+                      href={child.href}
+                      class:list={[
+                        "flex items-start gap-3 rounded-xl px-3 py-2.5 transition-colors hover:bg-cream-100",
+                        isActive(child.href) && "bg-cream-100",
+                      ]}
+                    >
+                      <span class="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gold-500/10 text-gold-600">
+                        <Icon name={child.icon} class="h-4 w-4" />
+                      </span>
+                      <span>
+                        <span class="block text-sm font-semibold text-navy-950">{child.label}</span>
+                        <span class="block text-xs text-navy-500">{child.desc}</span>
+                      </span>
+                    </a>
+                  ))}
+                </div>
+              </details>
+            ) : (
+              <a
+                href={item.href}
+                class:list={[
+                  "flex items-center gap-1.5 rounded-full px-3 py-2 transition-colors hover:bg-navy-900 hover:text-cream-50",
+                  isActive(item.href) ? "bg-navy-900 text-cream-50" : "text-navy-800",
+                ]}
+              >
+                <Icon name={item.icon} class="h-4 w-4" />
+                {item.label}
+              </a>
+            )}
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="hidden shrink-0 lg:block">
+      <a
+        href="/contact"
+        class="rounded-full bg-gold-500 px-5 py-2.5 text-sm font-semibold text-navy-950 shadow transition hover:bg-gold-600"
+      >
+        Je m'inscris
+      </a>
+    </div>
+
+    <button
+      id="mobile-nav-toggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="mobile-nav"
+      class="flex h-10 w-10 items-center justify-center rounded-full border border-navy-800/20 text-navy-900 lg:hidden"
+    >
+      <span class="sr-only">Ouvrir le menu</span>
+      <svg id="icon-open" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+      <svg id="icon-close" xmlns="http://www.w3.org/2000/svg" class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+  </div>
+
+  <nav id="mobile-nav" aria-label="Navigation mobile" class="hidden border-t border-navy-800/10 bg-cream-50 lg:hidden">
+    <ul class="flex flex-col gap-1 px-4 py-3 text-sm font-medium">
+      {navPrincipale.map((item) => (
+        <li>
+          {"children" in item ? (
+            <details class="group">
+              <summary
+                class:list={[
+                  "flex cursor-pointer list-none items-center gap-2 rounded-lg px-3 py-2 [&::-webkit-details-marker]:hidden",
+                  isGroupActive(item) ? "bg-navy-900 text-cream-50" : "text-navy-800",
+                ]}
+              >
+                <Icon name={item.icon} class="h-4 w-4" />
+                <span class="flex-1">{item.label}</span>
+                <Icon name="chevron-down" class="h-4 w-4 transition-transform group-open:rotate-180" />
+              </summary>
+              <ul class="mt-1 space-y-1 border-l-2 border-gold-500/40 pl-4">
+                {item.children.map((child) => (
+                  <li>
+                    <a
+                      href={child.href}
+                      class:list={[
+                        "flex items-center gap-2 rounded-lg px-3 py-2",
+                        isActive(child.href) ? "bg-navy-900 text-cream-50" : "text-navy-700 hover:bg-navy-900/5",
+                      ]}
+                    >
+                      <Icon name={child.icon} class="h-4 w-4" />
+                      {child.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </details>
+          ) : (
+            <a
+              href={item.href}
+              class:list={[
+                "flex items-center gap-2 rounded-lg px-3 py-2",
+                isActive(item.href) ? "bg-navy-900 text-cream-50" : "text-navy-800 hover:bg-navy-900/5",
+              ]}
+            >
+              <Icon name={item.icon} class="h-4 w-4" />
+              {item.label}
+            </a>
+          )}
+        </li>
+      ))}
+      <li class="pt-2">
+        <a href="/contact" class="block rounded-full bg-gold-500 px-4 py-2.5 text-center font-semibold text-navy-950">
+          Je m'inscris
+        </a>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+<style>
+  .nav-chevron {
+    transition: transform 0.2s ease;
+  }
+  details[open] > summary .nav-chevron {
+    transform: rotate(180deg);
+  }
+  .nav-dropdown > div {
+    animation: nav-dropdown-in 0.15s ease;
+  }
+  @keyframes nav-dropdown-in {
+    from {
+      opacity: 0;
+      transform: translateY(-4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
+
+<script>
+  const toggle = document.getElementById("mobile-nav-toggle");
+  const nav = document.getElementById("mobile-nav");
+  const iconOpen = document.getElementById("icon-open");
+  const iconClose = document.getElementById("icon-close");
+
+  toggle?.addEventListener("click", () => {
+    const expanded = toggle.getAttribute("aria-expanded") === "true";
+    toggle.setAttribute("aria-expanded", String(!expanded));
+    nav?.classList.toggle("hidden");
+    iconOpen?.classList.toggle("hidden");
+    iconClose?.classList.toggle("hidden");
+  });
+
+  // Ferme les menus déroulants desktop (<details>) au clic en dehors ou après un choix.
+  const dropdowns = document.querySelectorAll<HTMLDetailsElement>(".nav-dropdown");
+
+  document.addEventListener("click", (e) => {
+    dropdowns.forEach((d) => {
+      if (!d.contains(e.target as Node)) d.open = false;
+    });
+  });
+
+  dropdowns.forEach((d) => {
+    d.querySelectorAll("a").forEach((a) => a.addEventListener("click", () => (d.open = false)));
+  });
+</script>

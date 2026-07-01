@@ -1,0 +1,82 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Card from "../../components/Card.astro";
+import { getCollection } from "astro:content";
+
+const filieres = (await getCollection("filieres")).sort((a, b) => a.data.ordreAffichage - b.data.ordreAffichage);
+const domaines = [...new Set(filieres.map((f) => f.data.domaine))];
+---
+
+<BaseLayout
+  title="Catalogue des filières"
+  description="Plus de 40 filières de formation professionnelle réparties en 11 domaines : mode, hôtellerie, beauté, agriculture, bâtiment, numérique, santé, électricité, thermique, mécanique, administration."
+>
+  <section class="bg-navy-950 py-16 text-cream-50">
+    <div class="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
+      <p class="font-heading text-sm font-semibold uppercase tracking-widest text-gold-500">Catalogue</p>
+      <h1 class="mt-4 font-heading text-4xl font-bold sm:text-5xl">Nos filières de formation professionnelle</h1>
+      <p class="mt-4 text-cream-200">
+        {filieres.length} filières réparties en {domaines.length} domaines — 100% pratique, avec ou sans le BAC.
+      </p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+    <div id="filtres" class="flex flex-wrap justify-center gap-2">
+      <button type="button" data-domaine="__all" class="filtre-btn is-active rounded-full border border-navy-900 px-4 py-2 text-sm font-medium transition">
+        Toutes les filières
+      </button>
+      {domaines.map((d) => (
+        <button type="button" data-domaine={d} class="filtre-btn rounded-full border border-navy-900/20 px-4 py-2 text-sm font-medium text-navy-800 transition">
+          {d}
+        </button>
+      ))}
+    </div>
+
+    <div id="grille-filieres" class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {filieres.map((f) => (
+        <div class="filiere-item" data-domaine={f.data.domaine}>
+          <Card
+            href={`/filieres/${f.id}`}
+            image={f.data.imagePrincipale}
+            placeholderDomaine={f.data.domaine}
+            tag={f.data.domaine}
+            title={f.data.titre}
+            excerpt={f.data.descriptionCourte}
+            meta={f.data.duree}
+          />
+        </div>
+      ))}
+    </div>
+
+    <p id="aucun-resultat" class="mt-10 hidden text-center text-navy-600">Aucune filière dans ce domaine pour le moment.</p>
+  </section>
+</BaseLayout>
+
+<style>
+  .filtre-btn.is-active {
+    background-color: var(--color-navy-900);
+    color: var(--color-cream-50);
+  }
+</style>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>(".filtre-btn");
+  const items = document.querySelectorAll<HTMLElement>(".filiere-item");
+  const emptyMsg = document.getElementById("aucun-resultat");
+
+  buttons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      buttons.forEach((b) => b.classList.remove("is-active"));
+      btn.classList.add("is-active");
+      const domaine = btn.dataset.domaine;
+      let visibleCount = 0;
+      items.forEach((item) => {
+        const match = domaine === "__all" || item.dataset.domaine === domaine;
+        item.style.display = match ? "" : "none";
+        if (match) visibleCount++;
+      });
+      emptyMsg?.classList.toggle("hidden", visibleCount > 0);
+    });
+  });
+</script>

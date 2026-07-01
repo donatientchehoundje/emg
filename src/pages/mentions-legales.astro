@@ -1,0 +1,46 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { site } from "../data/site";
+---
+
+<BaseLayout
+  title="Mentions légales"
+  description="Mentions légales et politique de confidentialité du site du CPU ÉMERGENCE PLUS."
+>
+  <section class="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8">
+    <h1 class="font-heading text-3xl font-bold text-navy-950">Mentions légales</h1>
+
+    <div class="prose mt-8 max-w-none prose-headings:font-heading prose-headings:text-navy-950 prose-a:text-navy-700 prose-strong:text-navy-900">
+      <h2>Éditeur du site</h2>
+      <p>
+        Le présent site est édité par le <strong>{site.nomComplet}</strong> ({site.nomPrincipal}), établissement
+        de formation générale et professionnelle basé à {site.adresse}.
+      </p>
+      <p>
+        Téléphone : {site.telephones.map((t) => t.numero).join(" / ")} — Email :{" "}
+        <a href={`mailto:${site.email}`}>{site.email}</a>
+      </p>
+
+      <h2>Hébergement</h2>
+      <p>Ce site est hébergé par Netlify, Inc. — 44 Montgomery Street, Suite 300, San Francisco, CA 94104, USA.</p>
+
+      <h2>Propriété intellectuelle</h2>
+      <p>
+        L'ensemble des textes, photographies et éléments graphiques présents sur ce site sont la propriété du
+        {" "}{site.nomPrincipal}, sauf mention contraire. Toute reproduction sans autorisation préalable est interdite.
+      </p>
+
+      <h2>Données personnelles</h2>
+      <p>
+        Les informations recueillies via le formulaire de pré-inscription (nom, téléphone, email, filière
+        souhaitée) sont utilisées exclusivement par le {site.nomPrincipal} pour traiter votre demande d'information
+        ou d'inscription. Elles ne sont ni vendues ni transmises à des tiers à des fins commerciales. Vous pouvez
+        demander la suppression de vos données à tout moment en nous contactant à{" "}
+        <a href={`mailto:${site.email}`}>{site.email}</a>.
+      </p>
+
+      <h2>Cookies</h2>
+      <p>Ce site n'utilise pas de cookies de suivi publicitaire. Seuls des cookies techniques indispensables au bon fonctionnement du site peuvent être utilisés.</p>
+    </div>
+  </section>
+</BaseLayout>

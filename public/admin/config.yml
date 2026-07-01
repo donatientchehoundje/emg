@@ -1,0 +1,178 @@
+backend:
+  name: git-gateway
+  branch: main
+
+# Permet de tester le CMS en local avec `npx decap-server` + `netlify dev`
+local_backend: true
+
+publish_mode: simple
+media_folder: "public/uploads"
+public_folder: "/uploads"
+
+locale: "fr"
+
+collections:
+  - name: "filieres"
+    label: "Filières"
+    label_singular: "Filière"
+    folder: "src/content/filieres"
+    create: true
+    slug: "{{slug}}"
+    identifier_field: titre
+    fields:
+      - { label: "Titre", name: "titre", widget: "string" }
+      - label: "Domaine"
+        name: "domaine"
+        widget: "select"
+        options:
+          - "Mode & Artisanat"
+          - "Hôtellerie & Restauration"
+          - "Beauté"
+          - "Agriculture"
+          - "Bâtiment & BTP"
+          - "Communication & Numérique"
+          - "Administration"
+          - "Santé"
+          - "Génie électrique"
+          - "Génie thermique"
+          - "Métallurgie & Mécanique"
+      - { label: "Image principale", name: "imagePrincipale", widget: "image", required: false, hint: "Si aucune image n'est ajoutée, un visuel de substitution est affiché automatiquement." }
+      - { label: "Utiliser un visuel de substitution (pas de photo réelle)", name: "imagePlaceholder", widget: "boolean", default: true }
+      - { label: "Description courte (carte)", name: "descriptionCourte", widget: "text" }
+      - { label: "Durée", name: "duree", widget: "string" }
+      - label: "Certification(s)"
+        name: "certification"
+        widget: "select"
+        multiple: true
+        options: ["CQM", "CQP", "CAP", "DTI", "BAC pro", "DFP", "Attestation"]
+      - { label: "Niveau d'admission", name: "niveauAdmission", widget: "string" }
+      - { label: "Débouchés", name: "debouches", widget: "list", field: { label: "Débouché", name: "debouche", widget: "string" } }
+      - { label: "Mettre en avant sur l'accueil", name: "miseEnAvant", widget: "boolean", default: false }
+      - { label: "Ordre d'affichage", name: "ordreAffichage", widget: "number", default: 99 }
+      - { label: "Contenu détaillé", name: "body", widget: "markdown" }
+
+  - name: "classesGenerales"
+    label: "Classes générales (enseignement général)"
+    label_singular: "Classe"
+    folder: "src/content/classes-generales"
+    create: true
+    slug: "{{slug}}"
+    identifier_field: titre
+    fields:
+      - { label: "Titre", name: "titre", widget: "string" }
+      - { label: "Cycle", name: "cycle", widget: "select", options: ["Maternelle", "Primaire", "Secondaire"] }
+      - { label: "Niveaux", name: "niveaux", widget: "list", field: { label: "Niveau", name: "niveau", widget: "string" } }
+      - { label: "Séries / options", name: "series", widget: "list", required: false, field: { label: "Série", name: "serie", widget: "string" } }
+      - { label: "Description courte", name: "description", widget: "text" }
+      - { label: "Image", name: "image", widget: "image", required: false }
+      - { label: "Ordre d'affichage", name: "ordreAffichage", widget: "number", default: 99 }
+      - { label: "Contenu détaillé", name: "body", widget: "markdown" }
+
+  - name: "cycles"
+    label: "Formation professionnelle (cycles)"
+    label_singular: "Cycle"
+    folder: "src/content/cycles"
+    create: true
+    slug: "{{slug}}"
+    identifier_field: titre
+    fields:
+      - { label: "Titre", name: "titre", widget: "string" }
+      - { label: "Identifiant URL (slug)", name: "slug", widget: "string" }
+      - { label: "Description courte", name: "description", widget: "text" }
+      - { label: "Image", name: "image", widget: "image", required: false }
+      - { label: "Programme", name: "programme", widget: "list", field: { label: "Point", name: "point", widget: "string" } }
+      - { label: "Débouchés", name: "debouches", widget: "list", field: { label: "Débouché", name: "debouche", widget: "string" } }
+      - { label: "Durée", name: "duree", widget: "string" }
+      - { label: "Ordre d'affichage", name: "ordreAffichage", widget: "number", default: 99 }
+      - { label: "Contenu détaillé", name: "body", widget: "markdown" }
+
+  - name: "actualites"
+    label: "Actualités"
+    label_singular: "Actualité"
+    folder: "src/content/actualites"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    identifier_field: titre
+    fields:
+      - { label: "Titre", name: "titre", widget: "string" }
+      - { label: "Date de publication", name: "datePublication", widget: "datetime", format: "YYYY-MM-DD" }
+      - { label: "Date de l'événement (optionnel)", name: "dateEvenement", widget: "datetime", format: "YYYY-MM-DD", required: false }
+      - { label: "Image principale", name: "imagePrincipale", widget: "image", required: false }
+      - { label: "Chapô (résumé court)", name: "chapo", widget: "text" }
+      - label: "Catégorie"
+        name: "categorie"
+        widget: "select"
+        options: ["Événement", "Partenariat", "Vie de l'école", "Session de formation courte"]
+      - { label: "Lien de pré-inscription (optionnel)", name: "lienPreInscription", widget: "string", required: false }
+      - { label: "Publié", name: "publie", widget: "boolean", default: true }
+      - { label: "Contenu", name: "body", widget: "markdown" }
+
+  - name: "galerie"
+    label: "Galerie"
+    label_singular: "Album"
+    folder: "src/content/galerie"
+    create: true
+    slug: "{{slug}}"
+    identifier_field: titreAlbum
+    fields:
+      - { label: "Titre de l'album", name: "titreAlbum", widget: "string" }
+      - label: "Catégorie"
+        name: "categorie"
+        widget: "select"
+        options: ["Remise de diplômes", "Excursions", "Ateliers & Filières", "Village de vacances", "Vie de l'école"]
+      - { label: "Date", name: "date", widget: "datetime", format: "YYYY-MM-DD" }
+      - label: "Photos"
+        name: "images"
+        widget: "list"
+        field:
+          - { label: "Photo", name: "src", widget: "image" }
+          - { label: "Légende", name: "legende", widget: "string", required: false }
+
+  - name: "reglages"
+    label: "Réglages généraux"
+    files:
+      - label: "Coordonnées, réseaux sociaux et page d'accueil"
+        name: "site"
+        file: "src/data/site-settings.json"
+        fields:
+          - { label: "Devise du centre", name: "devise", widget: "string" }
+          - { label: "Année de fondation", name: "depuis", widget: "number" }
+          - label: "Téléphones"
+            name: "telephones"
+            widget: "list"
+            fields:
+              - { label: "Libellé", name: "label", widget: "string" }
+              - { label: "Numéro affiché", name: "numero", widget: "string" }
+              - { label: "Lien (tel:+229...)", name: "href", widget: "string" }
+          - { label: "Email", name: "email", widget: "string" }
+          - { label: "Adresse", name: "adresse", widget: "text" }
+          - { label: "Lien Facebook", name: "facebook", widget: "string" }
+          - { label: "Lien TikTok", name: "tiktok", widget: "string" }
+          - { label: "Numéro WhatsApp (format international sans +)", name: "whatsappNumero", widget: "string" }
+          - { label: "Titre principal (page d'accueil)", name: "heroTitre", widget: "string" }
+          - { label: "Sous-titre (page d'accueil)", name: "heroSousTitre", widget: "text" }
+          - label: "Chiffres clés (page d'accueil)"
+            name: "chiffresClés"
+            widget: "list"
+            fields:
+              - { label: "Valeur", name: "valeur", widget: "string" }
+              - { label: "Libellé", name: "libelle", widget: "string" }
+
+      - label: "Admissions et frais"
+        name: "admissions"
+        file: "src/data/admissions.json"
+        fields:
+          - { label: "Conditions générales", name: "conditionsGenerales", widget: "text" }
+          - label: "Frais"
+            name: "frais"
+            widget: "list"
+            fields:
+              - { label: "Libellé", name: "libelle", widget: "string" }
+              - { label: "Montant", name: "montant", widget: "string" }
+          - { label: "Pièces à fournir", name: "piecesAFournir", widget: "list", field: { label: "Pièce", name: "piece", widget: "string" } }
+          - label: "Calendrier des rentrées / sessions"
+            name: "calendrier"
+            widget: "list"
+            fields:
+              - { label: "Titre", name: "titre", widget: "string" }
+              - { label: "Date", name: "date", widget: "string" }

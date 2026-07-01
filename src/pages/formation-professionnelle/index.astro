@@ -1,0 +1,48 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import SectionHeading from "../../components/SectionHeading.astro";
+import Button from "../../components/Button.astro";
+import { getCollection } from "astro:content";
+
+const cycles = (await getCollection("cycles")).sort((a, b) => a.data.ordreAffichage - b.data.ordreAffichage);
+---
+
+<BaseLayout
+  title="Formation professionnelle"
+  description="Lycée polytechnique et professionnel, système dual, formations courtes et formation continue : plus de 40 filières réparties en 11 domaines, 100% pratique."
+>
+  <section class="bg-navy-950 py-16 text-cream-50">
+    <div class="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
+      <p class="font-heading text-sm font-semibold uppercase tracking-widest text-gold-500">Notre cœur de métier</p>
+      <h1 class="mt-4 font-heading text-4xl font-bold sm:text-5xl">Formation professionnelle</h1>
+      <p class="mt-4 text-cream-200">
+        Quatre parcours pour acquérir un métier concret, avec ou sans diplôme préalable, dans plus de 40 filières
+        réparties en 11 domaines.
+      </p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
+    <div class="grid gap-8 md:grid-cols-2">
+      {cycles.map((c) => (
+        <a href={`/formation-professionnelle/${c.data.slug}`} class="group flex flex-col rounded-2xl bg-white p-8 shadow-sm ring-1 ring-navy-900/5 transition hover:-translate-y-1 hover:shadow-lg">
+          <h2 class="font-heading text-2xl font-bold text-navy-950 group-hover:text-navy-700">{c.data.titre}</h2>
+          <p class="mt-3 flex-1 text-navy-700">{c.data.description}</p>
+          <p class="mt-4 text-sm font-semibold text-gold-600">{c.data.duree}</p>
+          <span class="mt-4 font-semibold text-navy-900 group-hover:underline">En savoir plus →</span>
+        </a>
+      ))}
+    </div>
+
+    <div class="mt-12 rounded-2xl bg-navy-900 p-8 text-center text-cream-50">
+      <h3 class="font-heading text-xl font-bold">Plus de 40 filières vous attendent</h3>
+      <p class="mt-2 text-cream-200">
+        Mode, hôtellerie, beauté, agriculture, bâtiment, numérique, santé, électricité, thermique, mécanique,
+        administration : trouvez la filière qui vous ressemble.
+      </p>
+      <div class="mt-6">
+        <Button href="/filieres">Parcourir le catalogue des filières</Button>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

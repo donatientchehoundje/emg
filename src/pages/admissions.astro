@@ -1,0 +1,66 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+import Button from "../components/Button.astro";
+import admissions from "../data/admissions.json";
+---
+
+<BaseLayout
+  title="Admissions"
+  description="Conditions d'admission, frais de formation et calendrier des rentrées au CPU ÉMERGENCE PLUS."
+>
+  <section class="bg-navy-950 py-16 text-cream-50">
+    <div class="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
+      <p class="font-heading text-sm font-semibold uppercase tracking-widest text-gold-500">Rejoignez-nous</p>
+      <h1 class="mt-4 font-heading text-4xl font-bold sm:text-5xl">Admissions</h1>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8">
+    <SectionHeading eyebrow="Conditions" title="Conditions d'admission" />
+    <p class="mt-4 text-navy-700">{admissions.conditionsGenerales}</p>
+
+    <div class="mt-10">
+      <h2 class="font-heading text-xl font-bold text-navy-950">Pièces à fournir</h2>
+      <ul class="mt-3 space-y-2 text-navy-700">
+        {admissions.piecesAFournir.map((p) => <li class="flex gap-2"><span class="text-gold-600">✓</span> {p}</li>)}
+      </ul>
+    </div>
+
+    <div class="mt-14">
+      <SectionHeading eyebrow="Tarification" title="Frais de formation" />
+      <div class="mt-6 overflow-hidden rounded-2xl ring-1 ring-navy-900/10">
+        <table class="w-full text-left text-sm">
+          <tbody>
+            {admissions.frais.map((f, i) => (
+              <tr class:list={[i % 2 === 0 ? "bg-white" : "bg-cream-100"]}>
+                <td class="px-5 py-4 font-medium text-navy-900">{f.libelle}</td>
+                <td class="px-5 py-4 text-right font-semibold text-navy-950">{f.montant}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="mt-3 text-xs text-navy-500">Tarifs indicatifs pour la formation professionnelle courte — contactez-nous pour le tarif exact de votre filière ou cycle.</p>
+    </div>
+
+    <div class="mt-14">
+      <SectionHeading eyebrow="Calendrier" title="Prochaines rentrées et sessions" />
+      <ul class="mt-6 space-y-3">
+        {admissions.calendrier.map((c) => (
+          <li class="flex flex-col gap-1 rounded-xl bg-cream-100 p-5 sm:flex-row sm:items-center sm:justify-between">
+            <span class="font-medium text-navy-900">{c.titre}</span>
+            <span class="text-sm font-semibold text-gold-600">{c.date}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="mt-14 rounded-2xl bg-gold-500 p-8 text-center">
+      <h3 class="font-heading text-xl font-bold text-navy-950">Prêt(e) à vous inscrire ?</h3>
+      <div class="mt-6">
+        <Button href="/contact" variant="secondary">Je m'inscris</Button>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

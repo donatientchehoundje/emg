@@ -1,0 +1,63 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import SectionHeading from "../../components/SectionHeading.astro";
+import Button from "../../components/Button.astro";
+import { getCollection } from "astro:content";
+
+const classes = (await getCollection("classesGenerales")).sort((a, b) => a.data.ordreAffichage - b.data.ordreAffichage);
+---
+
+<BaseLayout
+  title="Enseignement général"
+  description="Maternelle, Primaire et Secondaire au CPU ÉMERGENCE PLUS : un enseignement général classique, distinct de la formation professionnelle, menant au CEP, au BEPC et au Baccalauréat."
+>
+  <section class="bg-navy-950 py-16 text-cream-50">
+    <div class="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
+      <p class="font-heading text-sm font-semibold uppercase tracking-widest text-gold-500">Classes ouvertes</p>
+      <h1 class="mt-4 font-heading text-4xl font-bold sm:text-5xl">Enseignement général</h1>
+      <p class="mt-4 text-cream-200">
+        Un cursus scolaire classique, de la Maternelle à la Terminale — distinct de la formation professionnelle —
+        menant au CEP, au BEPC et au Baccalauréat.
+      </p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
+    <div class="grid gap-8 md:grid-cols-3">
+      {classes.map((c) => (
+        <div class="rounded-2xl bg-white p-8 shadow-sm ring-1 ring-navy-900/5">
+          <h2 class="font-heading text-2xl font-bold text-navy-950">{c.data.titre}</h2>
+          <p class="mt-3 text-navy-700">{c.data.description}</p>
+          {c.data.niveaux.length > 0 && (
+            <ul class="mt-4 flex flex-wrap gap-2">
+              {c.data.niveaux.map((n) => (
+                <li class="rounded-full bg-navy-900/5 px-3 py-1 text-xs font-medium text-navy-800">{n}</li>
+              ))}
+            </ul>
+          )}
+          {c.data.series.length > 0 && (
+            <>
+              <p class="mt-4 text-xs font-semibold uppercase tracking-wide text-gold-600">Séries / classes techniques</p>
+              <ul class="mt-2 flex flex-wrap gap-2">
+                {c.data.series.map((s) => (
+                  <li class="rounded-full bg-gold-500/10 px-3 py-1 text-xs font-medium text-navy-800">{s}</li>
+                ))}
+              </ul>
+            </>
+          )}
+        </div>
+      ))}
+    </div>
+
+    <div class="mt-12 rounded-2xl bg-cream-100 p-8 text-center">
+      <h3 class="font-heading text-xl font-bold text-navy-950">Vous cherchez plutôt un métier concret ?</h3>
+      <p class="mt-2 text-navy-700">
+        Découvrez notre offre de formation professionnelle : système dual, lycée polytechnique, formations
+        courtes et plus de 40 filières.
+      </p>
+      <div class="mt-6">
+        <Button href="/formation-professionnelle">Voir la formation professionnelle</Button>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

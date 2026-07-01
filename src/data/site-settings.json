@@ -1,0 +1,21 @@
+{
+  "devise": "Sérieux – Travail – Succès",
+  "depuis": 2017,
+  "telephones": [
+    { "label": "Standard / WhatsApp", "numero": "+229 01 67 81 07 62", "href": "tel:+2290167810762" },
+    { "label": "Secondaire", "numero": "+229 01 43 22 59 19", "href": "tel:+2290143225919" }
+  ],
+  "email": "contact@cpuemergenceplus.com",
+  "adresse": "Hévié, Adovié, dans la voie en face de l'ex-bar Chéri-Coco, Abomey-Calavi, Bénin",
+  "facebook": "https://www.facebook.com/profile.php?id=100091948447561",
+  "tiktok": "https://www.tiktok.com/@cpu.emergence.plus",
+  "whatsappNumero": "2290167810762",
+  "heroTitre": "Un métier en main, un avenir assuré",
+  "heroSousTitre": "Le CPU ÉMERGENCE PLUS forme depuis 2017 les jeunes du Bénin à plus de 40 filières professionnelles et à l'enseignement général, avec 100% de pratique et un accompagnement vers l'emploi.",
+  "chiffresClés": [
+    { "valeur": "2017", "libelle": "Année de fondation" },
+    { "valeur": "40+", "libelle": "Filières de formation" },
+    { "valeur": "11", "libelle": "Domaines professionnels" },
+    { "valeur": "100%", "libelle": "Pratique en atelier" }
+  ]
+}

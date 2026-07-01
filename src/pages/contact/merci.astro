@@ -1,0 +1,23 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Button from "../../components/Button.astro";
+import { whatsappLink } from "../../data/site";
+---
+
+<BaseLayout
+  title="Merci pour votre demande"
+  description="Votre demande de pré-inscription a bien été envoyée au CPU ÉMERGENCE PLUS."
+>
+  <section class="mx-auto flex min-h-[50vh] max-w-2xl flex-col items-center justify-center px-4 py-20 text-center sm:px-6 lg:px-8">
+    <span class="flex h-16 w-16 items-center justify-center rounded-full bg-gold-500 text-2xl text-navy-950">✓</span>
+    <h1 class="mt-6 font-heading text-3xl font-bold text-navy-950">Merci pour votre demande !</h1>
+    <p class="mt-4 text-navy-700">
+      Votre demande de pré-inscription a bien été envoyée. Notre équipe vous recontactera très rapidement par
+      téléphone ou WhatsApp.
+    </p>
+    <div class="mt-8 flex flex-col gap-4 sm:flex-row">
+      <Button href="/">Retour à l'accueil</Button>
+      <Button href={whatsappLink()} variant="secondary">Nous écrire sur WhatsApp</Button>
+    </div>
+  </section>
+</BaseLayout>

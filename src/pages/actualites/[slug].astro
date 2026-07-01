@@ -1,0 +1,49 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import DomainPlaceholder from "../../components/DomainPlaceholder.astro";
+import Button from "../../components/Button.astro";
+import { getCollection, render } from "astro:content";
+
+export async function getStaticPaths() {
+  const actualites = await getCollection("actualites");
+  return actualites.map((a) => ({
+    params: { slug: a.id },
+    props: { entry: a },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const { titre, datePublication, imagePrincipale, chapo, categorie } = entry.data;
+---
+
+<BaseLayout title={titre} description={chapo}>
+  <section class="mx-auto max-w-3xl px-4 py-12 sm:px-6 lg:px-8">
+    <a href="/actualites" class="text-sm font-medium text-navy-700 hover:underline">← Toutes les actualités</a>
+
+    <p class="mt-6 text-sm font-semibold uppercase tracking-wide text-gold-600">{categorie}</p>
+    <h1 class="mt-2 font-heading text-3xl font-bold text-navy-950 sm:text-4xl">{titre}</h1>
+    <p class="mt-2 text-sm text-navy-500">
+      {datePublication.toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" })}
+    </p>
+
+    <div class="mt-8 aspect-video overflow-hidden rounded-2xl shadow">
+      {imagePrincipale ? (
+        <img src={imagePrincipale} alt={titre} class="h-full w-full object-cover" loading="lazy" />
+      ) : (
+        <DomainPlaceholder domaine={categorie} />
+      )}
+    </div>
+
+    <div class="mt-8 prose max-w-none prose-headings:font-heading prose-headings:text-navy-950 prose-a:text-navy-700 prose-strong:text-navy-900">
+      <Content />
+    </div>
+
+    <div class="mt-12 rounded-2xl bg-cream-100 p-8 text-center">
+      <h3 class="font-heading text-xl font-bold text-navy-950">Une question sur cette actualité ?</h3>
+      <div class="mt-6">
+        <Button href="/contact">Nous contacter</Button>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

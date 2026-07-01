@@ -1,0 +1,74 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+import { site } from "../data/site";
+---
+
+<BaseLayout
+  title="À propos"
+  description="Depuis 2017, le CPU ÉMERGENCE PLUS forme les jeunes du Bénin à l'enseignement général et à la formation professionnelle, sous la devise Sérieux – Travail – Succès."
+>
+  <section class="bg-navy-950 py-16 text-cream-50">
+    <div class="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
+      <p class="font-heading text-sm font-semibold uppercase tracking-widest text-gold-500">À propos</p>
+      <h1 class="mt-4 font-heading text-4xl font-bold sm:text-5xl">Notre histoire, notre vision</h1>
+      <p class="mt-4 italic text-cream-200">{site.devise}</p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-4 py-16 sm:px-6 lg:px-8">
+    <div class="grid gap-10 md:grid-cols-2 md:items-center">
+      <img
+        src="/uploads/galerie/remise-diplome/emp7-fondateur.jpg"
+        alt="Le fondateur du CPU ÉMERGENCE PLUS"
+        class="aspect-[4/5] w-full rounded-2xl object-cover shadow-lg"
+        loading="lazy"
+      />
+      <div>
+        <SectionHeading eyebrow="Notre fondateur" title="Une vision professionnelle pour un avenir meilleur" />
+        <p class="mt-4 text-navy-700">
+          Le CPU ÉMERGENCE PLUS est né d'une conviction : dire non au chômage et promouvoir l'entrepreneuriat
+          artisanal auprès de la jeunesse béninoise. Depuis {site.depuis}, le centre accompagne chaque apprenant
+          vers un métier concret, avec ou sans diplôme préalable.
+        </p>
+        <p class="mt-4 text-navy-700">
+          Nous incarnons la résilience de l'Afrique, sa culture intrépide, ses valeurs et son esprit d'entreprise.
+          Nous sommes l'esprit africain : la force du nombre, du travail d'équipe et de la collaboration. Nous
+          aspirons à la durabilité et à un avenir prospère, partagé par tous.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-cream-100 py-16">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      <SectionHeading eyebrow="Notre vision" title="Devenir un pôle d'excellence de la formation au Bénin" align="center" />
+      <p class="mx-auto mt-6 max-w-3xl text-center text-navy-700">
+        Nous travaillons à devenir un pôle d'excellence de la formation de qualité dans le secteur technique et
+        professionnel, au Bénin et à l'international. Au CPU ÉMERGENCE PLUS, nous croyons en la transformation de
+        l'éducation en une expérience inégalée qui transcende les frontières et favorise l'épanouissement sans limite.
+      </p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-4 py-16 sm:px-6 lg:px-8">
+    <SectionHeading eyebrow="Nos formateurs" title="Une qualification reconnue" />
+    <p class="mt-4 text-navy-700">
+      Nos formateurs sont reconnus sur le plan national et international. Ils sont rigoureusement sélectionnés
+      sur la base de leur expertise et de leurs compétences pédagogiques et professionnelles, et suivis par le
+      Haut Conseil de l'Artisanat.
+    </p>
+  </section>
+
+  <section class="bg-navy-900 py-16">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      <SectionHeading eyebrow="Nos identités" title="Un même établissement, plusieurs appellations" />
+      <p class="mt-4 text-cream-200">
+        Le <strong class="text-cream-50">CPU ÉMERGENCE PLUS</strong> (Collège Polytechnique et Universitaire) est
+        le nom officiel de notre établissement. Selon le cycle suivi, il est aussi désigné « Lycée Polytechnique
+        et Professionnel ÉMERGENCE PLUS » pour ses filières techniques et professionnelles. Basé à Hévié Adovié,
+        c'est le premier lycée polytechnique privé moderne reconnu par l'État à Hévié.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

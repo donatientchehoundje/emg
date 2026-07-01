@@ -1,0 +1,78 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+const albums = (await getCollection("galerie")).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const categories = [...new Set(albums.map((a) => a.data.categorie))];
+---
+
+<BaseLayout
+  title="Galerie photo"
+  description="Cérémonies de remise de diplômes, excursions pédagogiques, vie d'atelier : découvrez le quotidien des apprenants du CPU ÉMERGENCE PLUS en images."
+>
+  <section class="bg-navy-950 py-16 text-cream-50">
+    <div class="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
+      <p class="font-heading text-sm font-semibold uppercase tracking-widest text-gold-500">Galerie</p>
+      <h1 class="mt-4 font-heading text-4xl font-bold sm:text-5xl">La vie au CPU ÉMERGENCE PLUS</h1>
+      <p class="mt-4 text-cream-200">Cérémonies, excursions, ateliers : le quotidien de nos apprenants en images.</p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+    <div class="flex flex-wrap justify-center gap-2">
+      <button type="button" data-cat="__all" class="cat-btn is-active rounded-full border border-navy-900 px-4 py-2 text-sm font-medium">Tout</button>
+      {categories.map((c) => (
+        <button type="button" data-cat={c} class="cat-btn rounded-full border border-navy-900/20 px-4 py-2 text-sm font-medium text-navy-800">{c}</button>
+      ))}
+    </div>
+
+    <div class="mt-10 space-y-16">
+      {albums.map((album) => (
+        <div class="album-item" data-cat={album.data.categorie}>
+          <div class="flex items-baseline justify-between gap-4">
+            <h2 class="font-heading text-2xl font-bold text-navy-950">{album.data.titreAlbum}</h2>
+            <span class="shrink-0 text-sm text-navy-500">
+              {album.data.date.toLocaleDateString("fr-FR", { month: "long", year: "numeric" })}
+            </span>
+          </div>
+          <div class="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
+            {album.data.images.map((img) => (
+              <a href={img.src} target="_blank" rel="noopener noreferrer" class="group block aspect-square overflow-hidden rounded-xl bg-navy-100">
+                <img
+                  src={img.src}
+                  alt={img.legende ?? album.data.titreAlbum}
+                  loading="lazy"
+                  decoding="async"
+                  class="h-full w-full object-cover transition duration-300 group-hover:scale-110"
+                />
+              </a>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .cat-btn.is-active {
+    background-color: var(--color-navy-900);
+    color: var(--color-cream-50);
+  }
+</style>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>(".cat-btn");
+  const albums = document.querySelectorAll<HTMLElement>(".album-item");
+
+  buttons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      buttons.forEach((b) => b.classList.remove("is-active"));
+      btn.classList.add("is-active");
+      const cat = btn.dataset.cat;
+      albums.forEach((album) => {
+        album.style.display = cat === "__all" || album.dataset.cat === cat ? "" : "none";
+      });
+    });
+  });
+</script>

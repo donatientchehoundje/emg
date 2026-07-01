@@ -1,0 +1,120 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+import { site, whatsappLink } from "../data/site";
+import { getCollection } from "astro:content";
+
+const filieres = (await getCollection("filieres")).sort((a, b) => a.data.titre.localeCompare(b.data.titre, "fr"));
+const mapQuery = encodeURIComponent(site.adresse);
+---
+
+<BaseLayout
+  title="Contact"
+  description="Contactez le CPU ÉMERGENCE PLUS par téléphone, WhatsApp, email ou via notre formulaire de pré-inscription."
+>
+  <section class="bg-navy-950 py-16 text-cream-50">
+    <div class="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
+      <p class="font-heading text-sm font-semibold uppercase tracking-widest text-gold-500">Contact</p>
+      <h1 class="mt-4 font-heading text-4xl font-bold sm:text-5xl">Parlons de votre avenir</h1>
+      <p class="mt-4 text-cream-200">Une question, un projet de formation ? Notre équipe vous répond rapidement.</p>
+    </div>
+  </section>
+
+  <section class="mx-auto grid max-w-6xl gap-12 px-4 py-16 sm:px-6 md:grid-cols-2 lg:px-8">
+    <div>
+      <SectionHeading eyebrow="Pré-inscription" title="Envoyez-nous votre demande" />
+      <form
+        name="pre-inscription"
+        method="POST"
+        data-netlify="true"
+        netlify-honeypot="bot-field"
+        action="/contact/merci"
+        class="mt-6 space-y-4"
+      >
+        <input type="hidden" name="form-name" value="pre-inscription" />
+        <p class="hidden">
+          <label>Ne pas remplir : <input name="bot-field" /></label>
+        </p>
+
+        <div>
+          <label for="nom" class="block text-sm font-medium text-navy-900">Nom complet *</label>
+          <input id="nom" name="nom" type="text" required class="mt-1 w-full rounded-lg border border-navy-900/20 px-4 py-2.5 focus:border-navy-700 focus:outline-none focus:ring-1 focus:ring-navy-700" />
+        </div>
+
+        <div>
+          <label for="telephone" class="block text-sm font-medium text-navy-900">Téléphone / WhatsApp *</label>
+          <input id="telephone" name="telephone" type="tel" required class="mt-1 w-full rounded-lg border border-navy-900/20 px-4 py-2.5 focus:border-navy-700 focus:outline-none focus:ring-1 focus:ring-navy-700" />
+        </div>
+
+        <div>
+          <label for="email" class="block text-sm font-medium text-navy-900">Email (optionnel)</label>
+          <input id="email" name="email" type="email" class="mt-1 w-full rounded-lg border border-navy-900/20 px-4 py-2.5 focus:border-navy-700 focus:outline-none focus:ring-1 focus:ring-navy-700" />
+        </div>
+
+        <div>
+          <label for="filiere" class="block text-sm font-medium text-navy-900">Filière souhaitée</label>
+          <select id="filiere" name="filiere" class="mt-1 w-full rounded-lg border border-navy-900/20 px-4 py-2.5 focus:border-navy-700 focus:outline-none focus:ring-1 focus:ring-navy-700">
+            <option value="">— Sélectionner —</option>
+            <option value="Enseignement général">Enseignement général (Maternelle, Primaire, Secondaire)</option>
+            {filieres.map((f) => <option value={f.data.titre}>{f.data.titre}</option>)}
+          </select>
+        </div>
+
+        <div>
+          <label for="message" class="block text-sm font-medium text-navy-900">Message (optionnel)</label>
+          <textarea id="message" name="message" rows="4" class="mt-1 w-full rounded-lg border border-navy-900/20 px-4 py-2.5 focus:border-navy-700 focus:outline-none focus:ring-1 focus:ring-navy-700"></textarea>
+        </div>
+
+        <button type="submit" class="w-full rounded-full bg-gold-500 px-6 py-3 font-semibold text-navy-950 shadow transition hover:bg-gold-600">
+          Envoyer ma demande
+        </button>
+      </form>
+    </div>
+
+    <div>
+      <SectionHeading eyebrow="Coordonnées" title="Nous joindre directement" />
+      <ul class="mt-6 space-y-5">
+        <li>
+          <p class="text-sm font-semibold text-navy-900">Adresse</p>
+          <p class="text-navy-700">{site.adresse}</p>
+        </li>
+        <li>
+          <p class="text-sm font-semibold text-navy-900">Téléphone / WhatsApp</p>
+          {site.telephones.map((t) => (
+            <p><a href={t.href} class="text-navy-700 hover:underline">{t.numero}</a> <span class="text-xs text-navy-500">({t.label})</span></p>
+          ))}
+        </li>
+        <li>
+          <p class="text-sm font-semibold text-navy-900">Email</p>
+          <a href={`mailto:${site.email}`} class="text-navy-700 hover:underline">{site.email}</a>
+        </li>
+        <li>
+          <p class="text-sm font-semibold text-navy-900">Réseaux sociaux</p>
+          <div class="mt-1 flex gap-4">
+            <a href={site.reseaux.facebook} target="_blank" rel="noopener noreferrer" class="text-navy-700 hover:underline">Facebook</a>
+            <a href={site.reseaux.tiktok} target="_blank" rel="noopener noreferrer" class="text-navy-700 hover:underline">TikTok</a>
+          </div>
+        </li>
+      </ul>
+
+      <a
+        href={whatsappLink()}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="mt-8 flex items-center justify-center gap-2 rounded-full bg-[#25D366] px-6 py-3 font-semibold text-white shadow transition hover:opacity-90"
+      >
+        Discuter directement sur WhatsApp
+      </a>
+
+      <div class="mt-8 aspect-video overflow-hidden rounded-2xl shadow">
+        <iframe
+          src={`https://www.google.com/maps?q=${mapQuery}&output=embed`}
+          class="h-full w-full border-0"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Localisation du CPU ÉMERGENCE PLUS"
+        ></iframe>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,56 @@
+---
+// Petite bibliothèque d'icônes inline (trait fin, cohérente avec DomainPlaceholder).
+// Ajouter un nom ici plutôt que d'importer une dépendance d'icônes externe.
+interface Props {
+  name: string;
+  class?: string;
+}
+
+const { name, class: className = "h-5 w-5" } = Astro.props;
+---
+
+{name === "home" && (
+  <svg class={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 11l8-6 8 6" stroke-linecap="round" stroke-linejoin="round" /><path d="M6 10v9h12v-9" stroke-linecap="round" stroke-linejoin="round" /><path d="M10 19v-5h4v5" stroke-linecap="round" stroke-linejoin="round" /></svg>
+)}
+{name === "info" && (
+  <svg class={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="8.5" /><path d="M12 11v5.5" stroke-linecap="round" /><circle cx="12" cy="8" r="0.6" fill="currentColor" stroke="none" /></svg>
+)}
+{name === "cap" && (
+  <svg class={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 9l10-4 10 4-10 4-10-4z" stroke-linejoin="round" /><path d="M6 11v5c0 1 2.7 2.5 6 2.5s6-1.5 6-2.5v-5" stroke-linecap="round" /><path d="M21 9.5V15" stroke-linecap="round" /></svg>
+)}
+{name === "book" && (
+  <svg class={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 6.5c-1.5-1.2-3.8-1.8-6.5-1.8v13c2.7 0 5 .6 6.5 1.8" stroke-linecap="round" stroke-linejoin="round" /><path d="M12 6.5c1.5-1.2 3.8-1.8 6.5-1.8v13c-2.7 0-5 .6-6.5 1.8V6.5z" stroke-linecap="round" stroke-linejoin="round" /></svg>
+)}
+{name === "tool" && (
+  <svg class={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M14.7 6.3a4 4 0 0 0-5.4 5l-6 6 2.4 2.4 6-6a4 4 0 0 0 5-5.4l-2.3 2.3-2-2z" stroke-linejoin="round" /></svg>
+)}
+{name === "grid" && (
+  <svg class={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3.5" y="3.5" width="7" height="7" rx="1.2" /><rect x="13.5" y="3.5" width="7" height="7" rx="1.2" /><rect x="3.5" y="13.5" width="7" height="7" rx="1.2" /><rect x="13.5" y="13.5" width="7" height="7" rx="1.2" /></svg>
+)}
+{name === "news" && (
+  <svg class={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3.5" y="5" width="14" height="14" rx="1.2" /><path d="M17.5 8.5h3v8a2 2 0 0 1-2 2h-1" stroke-linecap="round" stroke-linejoin="round" /><path d="M7 9h7M7 12.5h7M7 16h4" stroke-linecap="round" /></svg>
+)}
+{name === "image" && (
+  <svg class={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3.5" y="4.5" width="17" height="15" rx="1.5" /><circle cx="9" cy="10" r="1.6" /><path d="M4 17l5-5 4 4 3-3 4 4" stroke-linecap="round" stroke-linejoin="round" /></svg>
+)}
+{name === "check" && (
+  <svg class={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 12.5l2.2 2.2L16 10" stroke-linecap="round" stroke-linejoin="round" /><circle cx="12" cy="12" r="8.5" /></svg>
+)}
+{name === "mail" && (
+  <svg class={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5.5" width="18" height="13" rx="1.5" /><path d="M4 6.5l8 6.5 8-6.5" stroke-linecap="round" stroke-linejoin="round" /></svg>
+)}
+{name === "phone" && (
+  <svg class={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 3.5h3l1.4 4-2 1.5a11 11 0 0 0 5.6 5.6l1.5-2 4 1.4v3a1.5 1.5 0 0 1-1.6 1.5A16 16 0 0 1 4.5 5.1 1.5 1.5 0 0 1 6 3.5z" stroke-linejoin="round" /></svg>
+)}
+{name === "pin" && (
+  <svg class={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s7-6.5 7-11.5A7 7 0 0 0 5 9.5C5 14.5 12 21 12 21z" stroke-linejoin="round" /><circle cx="12" cy="9.5" r="2.3" /></svg>
+)}
+{name === "chevron-down" && (
+  <svg class={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+)}
+{name === "facebook" && (
+  <svg class={className} viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-8h2.7l.4-3.1h-3.1V8c0-.9.25-1.5 1.55-1.5H16.8V3.7C16.5 3.66 15.5 3.5 14.3 3.5c-2.4 0-4 1.45-4 4.1v2.3H7.6V13h2.7v8h3.2z" /></svg>
+)}
+{name === "tiktok" && (
+  <svg class={className} viewBox="0 0 24 24" fill="currentColor"><path d="M14.5 3h2.4c.15 1.4 1 3 3.1 3.4V9c-1.2.05-2.3-.3-3.1-.9v6.4a4.9 4.9 0 1 1-4.9-4.9c.2 0 .4 0 .6.03V12a2.5 2.5 0 1 0 1.9 2.4V3z" /></svg>
+)}

@@ -1,0 +1,172 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Button from "../components/Button.astro";
+import Card from "../components/Card.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+import { hero, site } from "../data/site";
+import { getCollection } from "astro:content";
+
+const filieresPhares = (await getCollection("filieres"))
+  .filter((f) => f.data.miseEnAvant)
+  .sort((a, b) => a.data.ordreAffichage - b.data.ordreAffichage)
+  .slice(0, 6);
+
+const dernieresActus = (await getCollection("actualites"))
+  .filter((a) => a.data.publie)
+  .sort((a, b) => b.data.datePublication.valueOf() - a.data.datePublication.valueOf())
+  .slice(0, 3);
+
+const cycles = (await getCollection("cycles")).sort((a, b) => a.data.ordreAffichage - b.data.ordreAffichage);
+
+const atouts = [
+  { titre: "Carte d'assurance", desc: "Pour la sécurité de tous nos apprenants." },
+  { titre: "Coaching personnel & professionnel", desc: "Un accompagnement au-delà des compétences techniques." },
+  { titre: "Wi-Fi gratuit", desc: "Pour accompagner les recherches professionnelles." },
+  { titre: "Cantine & infirmerie", desc: "Pour le bien-être quotidien de nos apprenants." },
+  { titre: "Hébergement disponible", desc: "Pour les apprenants venant de loin." },
+  { titre: "Stages en entreprise", desc: "Encadrés par des professionnels expérimentés." },
+];
+---
+
+<BaseLayout
+  title={site.nomPrincipal}
+  description="Le CPU ÉMERGENCE PLUS forme depuis 2017 les jeunes du Bénin à plus de 40 filières professionnelles et à l'enseignement général, avec 100% de pratique et un accompagnement vers l'emploi."
+>
+  <section class="relative overflow-hidden bg-navy-950">
+    <img
+      src="/uploads/filieres/haute-couture-stylisme-modelisme-1.jpg"
+      alt="Apprenante en formation pratique au CPU ÉMERGENCE PLUS"
+      class="absolute inset-0 h-full w-full object-cover opacity-30"
+    />
+    <div class="relative mx-auto max-w-5xl px-4 py-24 text-center sm:px-6 sm:py-32 lg:px-8">
+      <p class="font-heading text-sm font-semibold uppercase tracking-widest text-gold-500">
+        {site.nomPrincipal} — Depuis {site.depuis}
+      </p>
+      <h1 class="mt-4 font-heading text-4xl font-bold text-cream-50 sm:text-5xl lg:text-6xl">
+        {hero.titre}
+      </h1>
+      <p class="mx-auto mt-6 max-w-2xl text-lg text-cream-200">
+        {hero.sousTitre}
+      </p>
+      <div class="mt-10 flex flex-col justify-center gap-4 sm:flex-row">
+        <Button href="/filieres" variant="primary">Découvrir nos filières</Button>
+        <Button href="/contact" variant="ghost" class="!border-cream-100 !text-cream-50 hover:!bg-cream-50 hover:!text-navy-950">
+          Je m'inscris
+        </Button>
+      </div>
+    </div>
+  </section>
+
+  <section class="border-b border-navy-900/10 bg-cream-100">
+    <div class="mx-auto grid max-w-6xl grid-cols-2 gap-6 px-4 py-10 sm:px-6 md:grid-cols-4 lg:px-8">
+      {hero.chiffresCles.map((c) => (
+        <div class="text-center">
+          <p class="font-heading text-3xl font-bold text-navy-950 sm:text-4xl">{c.valeur}</p>
+          <p class="mt-1 text-sm text-navy-700">{c.libelle}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+    <SectionHeading
+      eyebrow="Notre offre"
+      title="Deux parcours, une même exigence"
+      subtitle="L'enseignement général classique et la formation professionnelle sont deux offres distinctes, pensées pour construire l'avenir de chaque apprenant."
+    />
+    <div class="mt-10 grid gap-6 md:grid-cols-2">
+      <a href="/enseignement-general" class="group rounded-2xl bg-navy-900 p-8 text-cream-50 transition hover:bg-navy-800">
+        <h3 class="font-heading text-2xl font-bold">Enseignement général</h3>
+        <p class="mt-3 text-cream-200">
+          Maternelle, Primaire (CI au CM2) et Secondaire (6ème à Terminale, séries A, B, C, D, avec ouverture de
+          classes HR, MMV, IMI, F2, F3, F4).
+        </p>
+        <span class="mt-4 inline-block font-semibold text-gold-500 group-hover:underline">Découvrir les classes ouvertes →</span>
+      </a>
+      <a href="/formation-professionnelle" class="group rounded-2xl bg-gold-500 p-8 text-navy-950 transition hover:bg-gold-600">
+        <h3 class="font-heading text-2xl font-bold">Formation professionnelle</h3>
+        <p class="mt-3">
+          Lycée polytechnique et professionnel, système dual, formations courtes et formation continue : plus de
+          40 filières réparties en 11 domaines, 100% pratique.
+        </p>
+        <span class="mt-4 inline-block font-semibold underline">Découvrir les filières →</span>
+      </a>
+    </div>
+
+    <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      {cycles.map((c) => (
+        <a href={`/formation-professionnelle/${c.data.slug}`} class="rounded-xl border border-navy-900/10 bg-white p-5 transition hover:border-gold-500 hover:shadow-md">
+          <h4 class="font-heading font-semibold text-navy-950">{c.data.titre}</h4>
+          <p class="mt-1 text-xs text-navy-600">{c.data.duree}</p>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="bg-cream-100 py-16">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <SectionHeading eyebrow="Filières phares" title="Des métiers porteurs d'avenir" align="center" />
+      <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {filieresPhares.map((f) => (
+          <Card
+            href={`/filieres/${f.id}`}
+            image={f.data.imagePrincipale}
+            placeholderDomaine={f.data.domaine}
+            tag={f.data.domaine}
+            title={f.data.titre}
+            excerpt={f.data.descriptionCourte}
+          />
+        ))}
+      </div>
+      <div class="mt-10 text-center">
+        <Button href="/filieres" variant="secondary">Voir les {"42"}+ filières</Button>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+    <SectionHeading eyebrow="Nos atouts" title="Un accompagnement complet, au-delà du diplôme" />
+    <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {atouts.map((a) => (
+        <div class="rounded-xl bg-white p-6 shadow-sm ring-1 ring-navy-900/5">
+          <h4 class="font-heading font-semibold text-navy-950">{a.titre}</h4>
+          <p class="mt-2 text-sm text-navy-700">{a.desc}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  {dernieresActus.length > 0 && (
+    <section class="bg-navy-950 py-16">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <SectionHeading eyebrow="Actualités" title="Ça se passe au CPU ÉMERGENCE PLUS" />
+        <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {dernieresActus.map((a) => (
+            <Card
+              href={`/actualites/${a.id}`}
+              image={a.data.imagePrincipale}
+              placeholderDomaine="Actualité"
+              tag={a.data.categorie}
+              title={a.data.titre}
+              excerpt={a.data.chapo}
+              meta={a.data.datePublication.toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" })}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section class="bg-gold-500 py-14">
+    <div class="mx-auto flex max-w-4xl flex-col items-center gap-6 px-4 text-center sm:px-6 lg:px-8">
+      <h2 class="font-heading text-3xl font-bold text-navy-950">Prêt(e) à construire votre avenir ?</h2>
+      <p class="text-navy-900">Contactez-nous dès aujourd'hui pour connaître la filière qui vous correspond.</p>
+      <div class="flex flex-col gap-4 sm:flex-row">
+        <Button href="/contact" variant="secondary">Je m'inscris</Button>
+        <Button href="/admissions" variant="ghost" class="!border-navy-950 !text-navy-950 hover:!bg-navy-950 hover:!text-cream-50">
+          Voir les conditions d'admission
+        </Button>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,37 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Card from "../../components/Card.astro";
+import { getCollection } from "astro:content";
+
+const actualites = (await getCollection("actualites"))
+  .filter((a) => a.data.publie)
+  .sort((a, b) => b.data.datePublication.valueOf() - a.data.datePublication.valueOf());
+---
+
+<BaseLayout
+  title="Actualités"
+  description="Toutes les actualités du CPU ÉMERGENCE PLUS : sessions de formation, événements, vie de l'école et partenariats."
+>
+  <section class="bg-navy-950 py-16 text-cream-50">
+    <div class="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
+      <p class="font-heading text-sm font-semibold uppercase tracking-widest text-gold-500">Actualités</p>
+      <h1 class="mt-4 font-heading text-4xl font-bold sm:text-5xl">Ça se passe au CPU ÉMERGENCE PLUS</h1>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {actualites.map((a) => (
+        <Card
+          href={`/actualites/${a.id}`}
+          image={a.data.imagePrincipale}
+          placeholderDomaine="Actualité"
+          tag={a.data.categorie}
+          title={a.data.titre}
+          excerpt={a.data.chapo}
+          meta={a.data.datePublication.toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" })}
+        />
+      ))}
+    </div>
+  </section>
+</BaseLayout>
