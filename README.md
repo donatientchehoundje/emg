@@ -54,24 +54,8 @@ npm run dev
 
 Puis ouvrir `http://localhost:4321/admin`.
 
-## Déploiement (Netlify)
-
-1. Pousser ce dépôt sur GitHub (ou GitLab/Bitbucket).
-2. Sur [netlify.com](https://netlify.com) : **Add new site → Import an existing project**, sélectionner le dépôt.
-3. Build command : `npm run build` — Publish directory : `dist` (déjà configuré dans `netlify.toml`).
-4. Une fois déployé, suivre les étapes **Administration du contenu** ci-dessus pour activer le CMS.
-5. Domaine personnalisé : **Site settings → Domain management** — pointer le nom de domaine du client (une fois
-   réservé) vers Netlify via les enregistrements DNS indiqués par Netlify.
-6. Mettre à jour `site` dans `astro.config.mjs` et `Sitemap` dans `public/robots.txt` avec le domaine définitif.
-
 ## Formulaire de contact
 
 Le formulaire de pré-inscription (`/contact`) utilise **Netlify Forms** — aucune configuration supplémentaire
 n'est nécessaire après le déploiement sur Netlify. Les soumissions sont visibles dans **Site settings → Forms**,
 et une notification par email peut être configurée dans **Forms → Form notifications**.
-
-## Points ouverts avant mise en ligne définitive (voir plan de projet)
-
-- Confirmer le nom de domaine définitif et mettre à jour `astro.config.mjs` (`site:`) et `public/robots.txt`.
-- Remplacer les visuels de substitution des filières par de vraies photos dès que disponibles.
-- Vérifier/mettre à jour les actualités datées (sessions ponctuelles) avant publication.
