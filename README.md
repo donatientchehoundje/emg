@@ -25,7 +25,7 @@ Tout le contenu éditable se trouve dans `src/content/` (fichiers Markdown) et `
 - `src/data/site-settings.json` — coordonnées, réseaux sociaux, texte de la page d'accueil
 - `src/data/admissions.json` — frais, conditions, calendrier des rentrées
 
-Les photos uploadées (par le développeur ou via le CMS) vivent dans `public/uploads/`.
+Les photos uploadées vivent dans `public/uploads/`.
 
 Les filières sans photo réelle affichent un visuel de substitution généré automatiquement (voir
 `src/components/DomainPlaceholder.astro`) — mettre `imagePlaceholder: false` et renseigner `imagePrincipale`
@@ -35,11 +35,6 @@ dès qu'une vraie photo est disponible.
 
 Une fois le site déployé sur Netlify, l'équipe du CPU ÉMERGENCE PLUS peut éditer tout le contenu ci-dessus depuis
 `https://<votre-domaine>/admin`, sans toucher au code :
-
-1. Dans Netlify : **Site settings → Identity → Enable Identity**.
-2. Toujours dans Identity : **Services → Git Gateway → Enable Git Gateway**.
-3. Inviter les personnes qui doivent pouvoir éditer le site (**Identity → Invite users**), avec leur email.
-4. La personne invitée reçoit un email, définit un mot de passe, puis se connecte sur `/admin`.
 
 Chaque modification (nouvelle filière, actualité, photo...) crée automatiquement un commit Git et redéploie le
 site en quelques minutes.
